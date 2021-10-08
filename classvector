@@ -1,0 +1,231 @@
+#include <iostream>
+
+
+class Vector
+{
+private:
+
+int capasity;
+
+int size;
+
+int* ptr;
+
+public:
+
+int get_capasity(){return this -> capasity;}
+
+int get_size(){return this -> size;}
+
+int at(int);
+
+void push__back(int);
+
+void pop_back();
+
+void erase(int);
+
+void insert(int, int);
+
+bool empty();
+
+void resize(int, int);
+
+int* data();
+
+void clear();
+
+void shrink_to_fit();
+
+void print_array();
+
+public:
+Vector();
+~Vector();
+};
+
+
+
+Vector::Vector(){
+
+ capasity  = 5;
+
+ size = 0;
+
+ptr = new int[capasity];
+
+ }
+Vector::~Vector()
+{
+delete [] ptr;
+}
+
+void Vector::push__back(int elem){
+
+
+
+if(capasity == size){
+
+
+
+capasity *= 2;
+
+int* tmp = new int[capasity];
+
+
+
+
+
+for(int i = 0; i < size; ++i)
+
+tmp[i] = ptr[i];
+
+ptr = tmp;
+
+}
+
+
+
+ptr[size] = elem;
+
+++size;
+
+}
+
+
+
+int Vector::at(int index){
+
+
+
+if(index < size && index >= 0)
+
+return ptr[index];
+
+
+
+std::cout << "Bad input\t";
+
+return -1;
+
+
+
+}
+
+
+
+void Vector::pop_back(){
+--size;
+}
+
+
+
+void Vector::erase(int index){
+
+if(index < 0){std::cout << "\nBad input\n";}
+
+else{
+int* p1 = new int[size - 1];
+
+
+
+for(int i = 0; i < index; ++i){
+
+p1[i] = ptr[i];}
+
+
+
+for(int i = index + 1; i < size; ++i)
+
+p1[i - 1] = ptr[i];
+
+--size;
+
+delete [] ptr;
+
+ptr = p1;
+}
+}
+
+
+void Vector::print_array(){
+for(int i = 0; i < size; ++i)
+	std::cout << ptr[i];
+}
+
+void Vector::insert(int index, int number){
+	if(index < 0){std::cout << "\nBad input\n";}
+int size1 = size + 1;
+int* iter = new int[size1];
+int count = 0;
+
+for(int i = 0; i <= index; ++i){
+++count;
+iter[i] = ptr[i];
+
+}
+iter[count] = number;
+
+for(int i = index + 2; i < size1; ++i){
+iter[i] = ptr[i - 1];
+}
+++size;
+ptr = iter;
+
+}
+
+bool Vector::empty(){
+if(size > 0){return false;}
+
+else {return true;}
+
+return true;
+}
+
+void Vector::resize(int n, int value){
+	int* nvec = new int[n];
+if(n <= size){
+
+	for(int i = 0; i < n; ++i){
+	 nvec[i] = ptr[i];
+	}
+	size = n;
+}
+else if(n > size){
+for(int i = 0; i < size; ++i){
+ nvec[i] = ptr[i];
+}
+for(int i = size; i < n; ++i){
+ nvec[i] = value;
+}
+size = n;
+}
+
+ptr = nvec;
+
+
+}
+
+int* Vector::data(){
+int* dptr = &ptr[0];
+
+return dptr;
+
+}
+
+void Vector::clear(){
+size = 0;
+}
+
+void Vector::shrink_to_fit(){
+
+size = capasity;
+}
+int main()
+{
+Vector v;
+
+return 0;
+}
+
+
